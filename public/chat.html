@@ -8,15 +8,19 @@
     html, body { height:100%; margin:0; }
     #my-chat { height:100vh; max-width:420px; margin:0 auto; }
   </style>
+  <!-- 👇 This line loads the web component definition -->
+  <script src="https://cdn.platform.openai.com/deployments/chatkit/chatkit.js" async></script>
 </head>
 <body>
   <div id="my-chat"></div>
+
   <script type="module">
+    // Create and mount the ChatKit web component
     const chat = document.createElement('openai-chatkit');
     chat.setOptions({
       api: {
         async getClientSecret(currentClientSecret) {
-          const base = "https://chatkit-auth-audit.vercel.app";
+          const base = "https://chatkit-auth-audit.vercel.app"; // your Vercel URL
           if (!currentClientSecret) {
             const r = await fetch(base + "/api/chatkit/start", { method: "POST" });
             return (await r.json()).client_secret;
